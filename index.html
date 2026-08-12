@@ -911,7 +911,7 @@ function openTmap(){
 // ─── 배경음악 (BGM) ─────────────────────────────
 const _bgm = document.getElementById('bgm');
 const _bgmBtn = document.getElementById('bgm-btn');
-_bgm.volume = 0.25;
+_bgm.volume = 0.15;
 // 버튼 상태는 오디오 이벤트로 동기화
 _bgm.addEventListener('play',  () => { _bgmBtn.classList.add('on');    _bgmBtn.innerHTML = '❚❚&nbsp;♪'; });
 _bgm.addEventListener('pause', () => { _bgmBtn.classList.remove('on'); _bgmBtn.innerHTML = '▶&nbsp;♪'; });
