@@ -73,6 +73,20 @@ body{font-family:'Noto Serif KR',serif;background:var(--ivory);color:var(--ink);
   display:flex;gap:2px;background:rgba(42,32,24,0.72);
   backdrop-filter:blur(8px);border-radius:30px;padding:4px;
 }
+/* ── BGM 버튼 (우측 상단) ─────────────────────── */
+#bgm-sw{
+  position:fixed;top:20px;right:20px;z-index:1000;
+  background:rgba(42,32,24,0.72);
+  backdrop-filter:blur(8px);border-radius:30px;padding:4px;
+}
+#bgm-btn{
+  padding:5px 14px;border:none;background:transparent;
+  color:rgba(255,255,255,0.75);font-size:0.72rem;letter-spacing:0.1em;
+  cursor:pointer;border-radius:20px;font-family:'Cinzel',serif;
+  transition:all 0.25s;
+}
+#bgm-btn.on{background:var(--gold2);color:#fff}
+#bgm-btn:hover{color:#fff}
 .lbtn{
   padding:5px 13px;border:none;background:transparent;
   color:rgba(255,255,255,0.6);font-size:0.7rem;letter-spacing:0.15em;
@@ -309,6 +323,7 @@ footer{
   .dday-box{min-width:54px}
   .dday-num{font-size:clamp(1.8rem,9vw,2.8rem)}
   #lang-sw{top:14px;left:14px}
+  #bgm-sw{top:14px;right:14px}
   .map-btns{flex-wrap:wrap}
   .mbtn{font-size:0.7rem;padding:9px 12px}
   .cv-names{font-size:clamp(2rem,8vw,3rem)}
@@ -342,6 +357,12 @@ footer{
   <button class="lbtn"        onclick="setLang('en')">EN</button>
   <button class="lbtn"        onclick="setLang('zh')">中</button>
 </div>
+
+<!-- ═══ BGM ═══════════════════════════════════ -->
+<div id="bgm-sw">
+  <button id="bgm-btn" onclick="toggleBgm()" aria-label="Background music">▶&nbsp;♪</button>
+</div>
+<audio id="bgm" src="bgm.mp3" loop preload="none"></audio>
 
 <!-- ═══ COVER ════════════════════════════════ -->
 <div id="cover">
@@ -885,6 +906,22 @@ function openTmap(){
   const t=Date.now();
   window.location.href=app;
   setTimeout(()=>{if(Date.now()-t<2000)window.open(web,'_blank')},1200);
+}
+
+// ─── 배경음악 (BGM) ─────────────────────────────
+function toggleBgm(){
+  const a = document.getElementById('bgm');
+  const b = document.getElementById('bgm-btn');
+  if(a.paused){
+    a.volume = 0.5;
+    a.play().catch(()=>{});
+    b.classList.add('on');
+    b.innerHTML = '❚❚&nbsp;♪';
+  } else {
+    a.pause();
+    b.classList.remove('on');
+    b.innerHTML = '▶&nbsp;♪';
+  }
 }
 
 // 언어 결정: URL ?lang= 우선, 없으면 브라우저 언어 자동 감지
