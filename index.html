@@ -888,8 +888,10 @@ function openTmap(){
   setTimeout(()=>{if(Date.now()-t<2000)window.open(web,'_blank')},1200);
 }
 
-// 브라우저 언어 자동 감지
+// 언어 결정: URL ?lang= 우선, 없으면 브라우저 언어 자동 감지
 (function(){
+  const q = new URLSearchParams(location.search).get('lang');
+  if(q === 'ko' || q === 'en' || q === 'zh'){ setLang(q); return; }
   const nav = navigator.language || navigator.userLanguage || 'ko';
   const l = nav.toLowerCase();
   if(l.startsWith('zh')) setLang('zh');
