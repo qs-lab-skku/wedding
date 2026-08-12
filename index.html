@@ -892,6 +892,26 @@ function lbNav(dir){
   document.getElementById('lb-count').textContent=`${lbIdx+1} / ${photos.length}`;
 }
 document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===document.getElementById('lightbox'))closeLb()});
+// ─── 라이트박스 스와이프 (좌우로 밀어서 사진 전환) ───
+(function(){
+  const lb = document.getElementById('lightbox');
+  let sx = 0, sy = 0, swiping = false;
+  lb.addEventListener('touchstart', e => {
+    if(e.touches.length !== 1) return;   // 핀치줌 등은 무시
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+    swiping = true;
+  }, {passive:true});
+  lb.addEventListener('touchend', e => {
+    if(!swiping) return;
+    swiping = false;
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if(Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5){
+      lbNav(dx < 0 ? 1 : -1);            // 왼쪽으로 밀면 다음, 오른쪽으로 밀면 이전
+    }
+  }, {passive:true});
+})();
 document.addEventListener('keydown',e=>{
   if(!document.getElementById('lightbox').classList.contains('active'))return;
   if(e.key==='Escape')closeLb();
