@@ -362,7 +362,7 @@ footer{
 <div id="bgm-sw">
   <button id="bgm-btn" onclick="toggleBgm()" aria-label="Background music">▶&nbsp;♪</button>
 </div>
-<audio id="bgm" src="bgm.mp3" loop preload="none"></audio>
+<audio id="bgm" src="bgm.mp3" loop preload="auto"></audio>
 
 <!-- ═══ COVER ════════════════════════════════ -->
 <div id="cover">
@@ -909,20 +909,30 @@ function openTmap(){
 }
 
 // ─── 배경음악 (BGM) ─────────────────────────────
+const _bgm = document.getElementById('bgm');
+const _bgmBtn = document.getElementById('bgm-btn');
+_bgm.volume = 0.35;
+// 버튼 상태는 오디오 이벤트로 동기화
+_bgm.addEventListener('play',  () => { _bgmBtn.classList.add('on');    _bgmBtn.innerHTML = '❚❚&nbsp;♪'; });
+_bgm.addEventListener('pause', () => { _bgmBtn.classList.remove('on'); _bgmBtn.innerHTML = '▶&nbsp;♪'; });
 function toggleBgm(){
-  const a = document.getElementById('bgm');
-  const b = document.getElementById('bgm-btn');
-  if(a.paused){
-    a.volume = 0.5;
-    a.play().catch(()=>{});
-    b.classList.add('on');
-    b.innerHTML = '❚❚&nbsp;♪';
-  } else {
-    a.pause();
-    b.classList.remove('on');
-    b.innerHTML = '▶&nbsp;♪';
-  }
+  if(_bgm.paused) _bgm.play().catch(()=>{});
+  else _bgm.pause();
 }
+// 자동 재생: 즉시 시도 → 차단되면 첫 터치/스크롤/클릭에서 시작
+let _bgmStarted = false;
+function _bgmAutoStart(e){
+  if(_bgmStarted) return;
+  // BGM 버튼 자체를 누른 경우는 toggleBgm이 처리
+  if(e && e.target && e.target.closest && e.target.closest('#bgm-sw')){ _bgmStarted = true; _bgmRemoveAuto(); return; }
+  _bgm.play().then(() => { _bgmStarted = true; _bgmRemoveAuto(); }).catch(()=>{});
+}
+const _bgmAutoEvents = ['pointerdown','touchstart','scroll','keydown'];
+function _bgmRemoveAuto(){
+  _bgmAutoEvents.forEach(ev => window.removeEventListener(ev, _bgmAutoStart));
+}
+_bgmAutoEvents.forEach(ev => window.addEventListener(ev, _bgmAutoStart, {passive:true}));
+_bgmAutoStart(null);  // 허용되는 환경이면 즉시 재생
 
 // 언어 결정: URL ?lang= 우선, 없으면 브라우저 언어 자동 감지
 (function(){
