@@ -781,27 +781,30 @@ updateDday();setInterval(updateDday,1000);
 // ─── LIGHTBOX ─────────────────────────────────
 const photos=["photos/full/p1_0013.jpg", "photos/full/p1_0074.jpg", "photos/full/p1_0360.jpg", "photos/full/p1_0467.jpg", "photos/full/p1_0503.jpg", "photos/full/p1_0514.jpg", "photos/full/p1_0942.jpg", "photos/full/p1_1586.jpg", "photos/full/p1_1633.jpg", "photos/full/p1_1641.jpg", "photos/full/p1_1647.jpg", "photos/full/p1_1653.jpg", "photos/full/p1_1669.jpg", "photos/full/p1_2012.jpg"];
 
-// ─── 갤러리 랜덤 셔플 (접속마다 순서 섞기) ─────────
+// ─── 갤러리: 본식 전체(367장)에서 접속마다 랜덤 14장 ──
+const ALBUM=["p1_0013.jpg", "p1_0015.jpg", "p1_0019.jpg", "p1_0021.jpg", "p1_0025.jpg", "p1_0028.jpg", "p1_0030.jpg", "p1_0038.jpg", "p1_0041.jpg", "p1_0044.jpg", "p1_0048.jpg", "p1_0050.jpg", "p1_0063.jpg", "p1_0074.jpg", "p1_0076.jpg", "p1_0077.jpg", "p1_0083.jpg", "p1_0088.jpg", "p1_0094.jpg", "p1_0099.jpg", "p1_0103.jpg", "p1_0107.jpg", "p1_0121.jpg", "p1_0133.jpg", "p1_0143.jpg", "p1_0150.jpg", "p1_0159.jpg", "p1_0163.jpg", "p1_0167.jpg", "p1_0169.jpg", "p1_0174.jpg", "p1_0181.jpg", "p1_0189.jpg", "p1_0190.jpg", "p1_0195.jpg", "p1_0201.jpg", "p1_0205.jpg", "p1_0208.jpg", "p1_0216.jpg", "p1_0218.jpg", "p1_0221.jpg", "p1_0222.jpg", "p1_0227.jpg", "p1_0230.jpg", "p1_0234.jpg", "p1_0238.jpg", "p1_0247.jpg", "p1_0251.jpg", "p1_0264.jpg", "p1_0271.jpg", "p1_0278.jpg", "p1_0290.jpg", "p1_0303.jpg", "p1_0310.jpg", "p1_0315.jpg", "p1_0321.jpg", "p1_0328.jpg", "p1_0336.jpg", "p1_0344.jpg", "p1_0350.jpg", "p1_0354.jpg", "p1_0360.jpg", "p1_0365.jpg", "p1_0370.jpg", "p1_0379.jpg", "p1_0395.jpg", "p1_0409.jpg", "p1_0415.jpg", "p1_0420.jpg", "p1_0425.jpg", "p1_0430.jpg", "p1_0433.jpg", "p1_0446.jpg", "p1_0456.jpg", "p1_0467.jpg", "p1_0470.jpg", "p1_0478.jpg", "p1_0486.jpg", "p1_0492.jpg", "p1_0495.jpg", "p1_0499.jpg", "p1_0501.jpg", "p1_0503.jpg", "p1_0506.jpg", "p1_0510.jpg", "p1_0514.jpg", "p1_0525.jpg", "p1_0534.jpg", "p1_0572.jpg", "p1_0577.jpg", "p1_0590.jpg", "p1_0596.jpg", "p1_0622.jpg", "p1_0779.jpg", "p1_0792.jpg", "p1_0796.jpg", "p1_0800.jpg", "p1_0810.jpg", "p1_0823.jpg", "p1_0857.jpg", "p1_0869.jpg", "p1_0873.jpg", "p1_0876.jpg", "p1_0884.jpg", "p1_0898.jpg", "p1_0900.jpg", "p1_0905.jpg", "p1_0910.jpg", "p1_0914.jpg", "p1_0922.jpg", "p1_0930.jpg", "p1_0936.jpg", "p1_0942.jpg", "p1_0950.jpg", "p1_0980.jpg", "p1_0985.jpg", "p1_0996.jpg", "p1_1002.jpg", "p1_1005.jpg", "p1_1009.jpg", "p1_1021.jpg", "p1_1036.jpg", "p1_1070.jpg", "p1_1113.jpg", "p1_1120.jpg", "p1_1152.jpg", "p1_1171.jpg", "p1_1184.jpg", "p1_1190.jpg", "p1_1193.jpg", "p1_1201.jpg", "p1_1219.jpg", "p1_1235.jpg", "p1_1246.jpg", "p1_1252.jpg", "p1_1265.jpg", "p1_1297.jpg", "p1_1307.jpg", "p1_1336.jpg", "p1_1346.jpg", "p1_1361.jpg", "p1_1423.jpg", "p1_1446.jpg", "p1_1475.jpg", "p1_1483.jpg", "p1_1493.jpg", "p1_1500.jpg", "p1_1515.jpg", "p1_1526.jpg", "p1_1546.jpg", "p1_1552.jpg", "p1_1556.jpg", "p1_1561.jpg", "p1_1568.jpg", "p1_1571.jpg", "p1_1582.jpg", "p1_1586.jpg", "p1_1597.jpg", "p1_1600.jpg", "p1_1604.jpg", "p1_1606.jpg", "p1_1608.jpg", "p1_1611.jpg", "p1_1619.jpg", "p1_1620.jpg", "p1_1628.jpg", "p1_1629.jpg", "p1_1633.jpg", "p1_1641.jpg", "p1_1647.jpg", "p1_1653.jpg", "p1_1658.jpg", "p1_1663.jpg", "p1_1669.jpg", "p1_1675.jpg", "p1_1691.jpg", "p1_1696.jpg", "p1_1712.jpg", "p1_1721.jpg", "p1_1729.jpg", "p1_1745.jpg", "p1_1757.jpg", "p1_1762.jpg", "p1_1778.jpg", "p1_1782.jpg", "p1_1789.jpg", "p1_1799.jpg", "p1_1807.jpg", "p1_1814.jpg", "p1_1831.jpg", "p1_1846.jpg", "p1_1873.jpg", "p1_1884.jpg", "p1_1931.jpg", "p1_1945.jpg", "p1_1961.jpg", "p1_1987.jpg", "p1_1997.jpg", "p1_2004.jpg", "p1_2012.jpg", "p1_2017.jpg", "p1_2039.jpg", "p1_2041.jpg", "p1_2050.jpg", "p1_2090.jpg", "p1_2100.jpg", "p1_2120.jpg", "p1_2134.jpg", "p1_2138.jpg", "p1_2148.jpg", "p1_2163.jpg", "p1_2169.jpg", "p1_2174.jpg", "p1_2188.jpg", "p1_2206.jpg", "p1_2213.jpg", "p1_2216.jpg", "p1_2223.jpg", "p1_2240.jpg", "p1_2247.jpg", "p1_2263.jpg", "p1_2279.jpg", "p1_2285.jpg", "p1_2309.jpg", "p1_2315.jpg", "p1_2322.jpg", "p1_2333.jpg", "p1_2344.jpg", "p1_2358.jpg", "p1_2370.jpg", "p1_2392.jpg", "p1_2401.jpg", "p1_2410.jpg", "p1_2415.jpg", "p1_2432.jpg", "p1_2447.jpg", "p1_2449.jpg", "p1_2466.jpg", "p1_2473.jpg", "p1_2494.jpg", "p1_2502.jpg", "p2_0220.jpg", "p2_0222.jpg", "p2_0231.jpg", "p2_0233.jpg", "p2_0243.jpg", "p2_0247.jpg", "p2_0254.jpg", "p2_0259.jpg", "p2_0270.jpg", "p2_0273.jpg", "p2_0282.jpg", "p2_0290.jpg", "p2_0295.jpg", "p2_0297.jpg", "p2_0305.jpg", "p2_0309.jpg", "p2_0323.jpg", "p2_0342.jpg", "p2_0345.jpg", "p2_0350.jpg", "p2_0354.jpg", "p2_0360.jpg", "p2_0368.jpg", "p2_0377.jpg", "p2_0384.jpg", "p2_0391.jpg", "p2_0395.jpg", "p2_0405.jpg", "p2_0412.jpg", "p2_0415.jpg", "p2_0422.jpg", "p2_0438.jpg", "p2_0441.jpg", "p2_0445.jpg", "p2_0452.jpg", "p2_0457.jpg", "p2_0464.jpg", "p2_0468.jpg", "p2_0474.jpg", "p2_0483.jpg", "p2_0488.jpg", "p2_0510.jpg", "p2_0519.jpg", "p2_0529.jpg", "p2_0539.jpg", "p2_0546.jpg", "p2_0555.jpg", "p2_0564.jpg", "p2_0571.jpg", "p2_0575.jpg", "p2_0595.jpg", "p2_0607.jpg", "p2_0616.jpg", "p2_0630.jpg", "p2_0635.jpg", "p2_0639.jpg", "p2_0643.jpg", "p2_0651.jpg", "p2_0656.jpg", "p2_0662.jpg", "p2_0670.jpg", "p2_0677.jpg", "p2_0684.jpg", "p2_0690.jpg", "p2_0698.jpg", "p2_0725.jpg", "p2_0735.jpg", "p2_0741.jpg", "p2_0749.jpg", "p2_0763.jpg", "p2_0765.jpg", "p2_0768.jpg", "p2_0772.jpg", "p2_0777.jpg", "p2_0788.jpg", "p2_0796.jpg", "p2_0804.jpg", "p2_0810.jpg", "p2_0817.jpg", "p2_0830.jpg", "p2_0836.jpg", "p2_0852.jpg", "p2_0857.jpg", "p2_0865.jpg", "p2_0883.jpg", "p2_0900.jpg", "p2_0908.jpg", "p2_0920.jpg", "p2_0928.jpg", "p2_0929.jpg", "p2_0940.jpg", "p2_0956.jpg", "p2_0963.jpg", "p2_0975.jpg", "p2_1003.jpg", "p2_1012.jpg", "p2_1023.jpg", "p2_1048.jpg", "p2_1060.jpg", "p2_1087.jpg", "p2_1098.jpg", "p2_1109.jpg", "p2_1116.jpg", "p2_1122.jpg", "p2_1133.jpg", "p2_1141.jpg", "p2_1143.jpg", "p2_1148.jpg", "p2_1171.jpg", "p2_1186.jpg", "p2_1196.jpg", "p2_1229.jpg", "p2_1239.jpg", "p2_1248.jpg", "p2_1260.jpg", "p2_1274.jpg", "p2_1300.jpg", "p2_1312.jpg", "p2_1316.jpg", "p2_1324.jpg", "p2_1329.jpg", "p2_1335.jpg", "p2_1344.jpg", "p2_1347.jpg", "p2_1370.jpg", "p2_1380.jpg"];
 (function(){
   const grid = document.querySelector('.gallery-grid');
-  if(!grid) return;
-  const items = Array.from(grid.querySelectorAll('.gi'));
-  if(items.length !== photos.length) return;  // 불일치 시 셔플 생략 (안전장치)
-  const order = items.map((_, i) => i);
-  for(let i = order.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [order[i], order[j]] = [order[j], order[i]];
+  if(!grid || typeof ALBUM === 'undefined' || !ALBUM.length) return;
+  const N = Math.min(14, ALBUM.length);
+  // 부분 Fisher-Yates로 중복 없이 N장 추출
+  const pool = ALBUM.slice();
+  for(let i = 0; i < N; i++){
+    const j = i + Math.floor(Math.random() * (pool.length - i));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
   }
-  const shuffled = order.map(i => photos[i]);
+  const picks = pool.slice(0, N);
   photos.length = 0;
-  photos.push(...shuffled);
-  order.forEach((srcIdx, pos) => {
-    const el = items[srcIdx];
-    el.setAttribute('onclick', `openLb(${pos})`);
-    grid.appendChild(el);
-  });
+  picks.forEach(n => photos.push('photos/full/' + n));
+  grid.querySelectorAll('.gi').forEach(el => el.remove());
   const more = grid.querySelector('.gi-more');
-  if(more) grid.appendChild(more);   // '전체 보기' 타일은 항상 마지막
+  picks.forEach((n, i) => {
+    const div = document.createElement('div');
+    div.className = 'gi';
+    div.setAttribute('onclick', `openLb(${i})`);
+    div.innerHTML = `<img src="photos/thumb/${n}" loading="lazy" alt="">`;
+    grid.insertBefore(div, more);   // '전체 보기' 타일은 항상 마지막
+  });
 })();
 
 let lbIdx=0;
