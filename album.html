@@ -314,7 +314,7 @@ document.getElementById('lb-close').addEventListener('click', closeLb);
 // "길게 눌러 저장" 안내로 전환, 그 외 모바일은 공유 시트(갤러리 저장),
 // 데스크톱 등은 blob 다운로드로 처리
 const UA = navigator.userAgent;
-const IN_APP = /MicroMessenger|WeChat|Weibo|QQ\//i.test(UA) || (/QQBrowser|UCBrowser|Quark|baiduboxapp/i.test(UA) && /Android/i.test(UA));
+const IN_APP = /KAKAOTALK|MicroMessenger|WeChat|Weibo|QQ\/|NAVER\(inApp|DaumApps|\bLine\/|Instagram|FBAN|FBAV/i.test(UA) || (/QQBrowser|UCBrowser|Quark|baiduboxapp/i.test(UA) && /Android/i.test(UA));
 const IS_MOBILE = /Android|iPhone|iPad|iPod/i.test(UA);
 const lpOv = document.getElementById('lp-ov');
 function showLp(url){
