@@ -39,7 +39,7 @@ button{font:inherit}
 /* ── 상단 고정 버튼 (언어 · 돌아가기) ───────────── */
 .pill{
   position:fixed;top:20px;z-index:50;
-  display:flex;gap:2px;background:rgba(42,32,24,0.72);
+  display:flex;gap:2px;background:rgba(36,43,28,0.72);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:30px;padding:4px;
 }
 #lang-sw{left:20px}
@@ -87,7 +87,7 @@ body.zh #back{font-family:'Noto Serif SC',serif}
 #totop{
   position:fixed;right:18px;bottom:calc(22px + env(safe-area-inset-bottom));z-index:40;
   width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;
-  background:rgba(42,32,24,0.72);color:#fff;font-size:1rem;
+  background:rgba(36,43,28,0.72);color:#fff;font-size:1rem;
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   opacity:0;pointer-events:none;transform:translateY(8px);transition:all 0.3s;
 }
@@ -96,7 +96,7 @@ body.zh #back{font-family:'Noto Serif SC',serif}
 /* ── 라이트박스 ─────────────────────────────── */
 #lightbox{
   display:none;position:fixed;inset:0;z-index:100;
-  background:rgba(14,11,8,0.96);
+  background:rgba(12,15,9,0.96);
   flex-direction:column;align-items:center;justify-content:center;padding:20px;
 }
 #lightbox.active{display:flex}
@@ -112,15 +112,35 @@ body.zh #back{font-family:'Noto Serif SC',serif}
 }
 #lb-prev{left:4px}#lb-next{right:4px}
 #lb-close:hover,.lb-nav:hover{opacity:1}
-#lb-bar{display:flex;align-items:center;gap:18px;margin-top:14px}
+#lb-bar{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:12px}
 #lb-count{color:rgba(255,255,255,0.45);font-size:0.72rem;letter-spacing:0.25em;font-family:'Cinzel',serif}
 #lb-save{
-  color:rgba(255,255,255,0.75);font-size:0.72rem;letter-spacing:0.08em;text-decoration:none;
-  border:0.5px solid rgba(255,255,255,0.35);border-radius:30px;padding:6px 14px;
-  display:inline-flex;align-items:center;gap:6px;
+  color:#fff;font-size:0.92rem;letter-spacing:0.1em;text-decoration:none;
+  background:var(--gold2);border:none;border-radius:34px;padding:13px 20px;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-width:min(300px,76vw);cursor:pointer;
 }
-#lb-save:hover{background:var(--gold2);border-color:var(--gold2);color:#fff}
-#lb-save svg{width:13px;height:13px}
+#lb-save:hover{background:var(--gold)}
+#lb-save:active{transform:scale(0.97)}
+#lb-save svg{width:17px;height:17px}
+#lb-save.busy{opacity:0.6;pointer-events:none}
+
+/* ── 길게 눌러 저장 안내 (위챗 등 인앱 브라우저용) ── */
+#lp-ov{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(12,15,9,0.97);
+  flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:18px;
+}
+#lp-ov.active{display:flex}
+#lp-img{max-width:88vw;max-height:70vh;max-height:70svh;object-fit:contain}
+#lp-tip{
+  color:#fff;font-size:0.95rem;letter-spacing:0.04em;text-align:center;line-height:1.7;
+  background:var(--gold2);border-radius:30px;padding:10px 24px;word-break:keep-all;
+}
+#lp-close{
+  position:absolute;top:14px;right:16px;color:#fff;font-size:2rem;line-height:1;
+  cursor:pointer;opacity:0.7;background:none;border:none;padding:8px 10px;font-family:sans-serif;
+}
 
 footer{
   text-align:center;padding:48px 20px 64px;margin-top:40px;
@@ -175,6 +195,12 @@ footer{
   </div>
 </div>
 
+<div id="lp-ov">
+  <button id="lp-close" type="button" aria-label="Close">×</button>
+  <img id="lp-img" src="" alt="">
+  <div id="lp-tip"></div>
+</div>
+
 <script>
 // 촬영 시각 순서 (두 카메라 시계 차이 보정)
 const PHOTOS = ["p2_0220","p2_0222","p1_0013","p1_0015","p2_0231","p1_0019","p2_0233","p1_0021","p1_0025","p1_0028","p1_0030","p1_0038","p1_0041","p2_0243","p1_0044","p1_0048","p2_0247","p1_0050","p2_0254","p1_0063","p2_0259","p1_0074","p1_0076","p1_0077","p1_0083","p1_0088","p1_0094","p1_0099","p2_0270","p2_0273","p1_0103","p2_0282","p1_0107","p2_0290","p2_0295","p1_0121","p2_0297","p1_0133","p1_0143","p2_0305","p1_0150","p1_0159","p2_0309","p1_0163","p1_0167","p1_0169","p2_0323","p1_0174","p1_0181","p1_0189","p1_0190","p2_0342","p1_0195","p2_0345","p2_0350","p1_0201","p1_0205","p2_0354","p1_0208","p2_0360","p2_0368","p1_0216","p2_0377","p2_0384","p2_0391","p1_0218","p1_0221","p1_0222","p2_0395","p1_0227","p1_0230","p1_0234","p1_0238","p2_0405","p1_0247","p1_0251","p2_0412","p2_0415","p2_0422","p2_0438","p1_0264","p2_0441","p2_0445","p1_0271","p1_0278","p1_0290","p1_0303","p1_0310","p2_0452","p1_0315","p1_0321","p2_0457","p1_0328","p1_0336","p2_0464","p1_0344","p1_0350","p1_0354","p1_0360","p2_0468","p1_0365","p1_0370","p2_0474","p1_0379","p2_0483","p2_0488","p1_0395","p1_0409","p2_0510","p2_0519","p1_0415","p2_0529","p1_0420","p1_0425","p1_0430","p1_0433","p1_0446","p2_0539","p1_0456","p2_0546","p2_0555","p1_0467","p1_0470","p1_0478","p1_0486","p1_0492","p1_0495","p2_0564","p1_0499","p1_0501","p1_0503","p1_0506","p1_0510","p2_0571","p1_0514","p2_0575","p1_0525","p1_0534","p1_0572","p1_0577","p1_0590","p1_0596","p1_0622","p2_0595","p2_0607","p2_0616","p2_0630","p2_0635","p2_0639","p2_0643","p2_0651","p2_0656","p2_0662","p2_0670","p2_0677","p2_0684","p2_0690","p2_0698","p2_0725","p2_0735","p2_0741","p2_0749","p1_0779","p2_0763","p2_0765","p1_0792","p2_0768","p2_0772","p2_0777","p2_0788","p2_0796","p1_0796","p2_0804","p1_0800","p2_0810","p1_0810","p1_0823","p2_0817","p1_0857","p2_0830","p1_0869","p2_0836","p1_0873","p1_0876","p1_0884","p2_0852","p1_0898","p2_0857","p2_0865","p1_0900","p1_0905","p1_0910","p1_0914","p2_0883","p1_0922","p1_0930","p1_0936","p1_0942","p1_0950","p2_0900","p2_0908","p2_0920","p2_0928","p2_0929","p2_0940","p1_0980","p1_0985","p1_0996","p1_1002","p1_1005","p1_1009","p1_1021","p2_0956","p1_1036","p2_0963","p1_1070","p1_1113","p1_1120","p1_1152","p1_1171","p2_0975","p1_1184","p1_1190","p1_1193","p1_1201","p1_1219","p1_1235","p2_1003","p1_1246","p1_1252","p2_1012","p1_1265","p1_1297","p1_1307","p1_1336","p1_1346","p1_1361","p2_1023","p1_1423","p1_1446","p1_1475","p1_1483","p1_1493","p1_1500","p1_1515","p1_1526","p2_1048","p2_1060","p1_1546","p1_1552","p1_1556","p1_1561","p1_1568","p1_1571","p2_1087","p1_1582","p2_1098","p1_1586","p2_1109","p1_1597","p2_1116","p1_1600","p2_1122","p1_1604","p1_1606","p2_1133","p1_1608","p1_1611","p1_1619","p1_1620","p2_1141","p1_1628","p1_1629","p1_1633","p1_1641","p1_1647","p2_1143","p1_1653","p2_1148","p1_1658","p1_1663","p1_1669","p1_1675","p2_1171","p1_1691","p1_1696","p1_1712","p1_1721","p2_1186","p1_1729","p1_1745","p1_1757","p1_1762","p1_1778","p1_1782","p1_1789","p1_1799","p2_1196","p1_1807","p1_1814","p2_1229","p1_1831","p1_1846","p2_1239","p1_1873","p2_1248","p1_1884","p2_1260","p1_1931","p1_1945","p1_1961","p2_1274","p1_1987","p2_1300","p1_1997","p1_2004","p2_1312","p2_1316","p2_1324","p2_1329","p2_1335","p2_1344","p2_1347","p1_2012","p1_2017","p1_2039","p1_2041","p1_2050","p1_2090","p1_2100","p1_2120","p1_2134","p1_2138","p1_2148","p1_2163","p1_2169","p1_2174","p2_1370","p1_2188","p1_2206","p1_2213","p1_2216","p1_2223","p1_2240","p1_2247","p1_2263","p1_2279","p1_2285","p1_2309","p1_2315","p1_2322","p1_2333","p1_2344","p1_2358","p1_2370","p1_2392","p1_2401","p1_2410","p1_2415","p1_2432","p1_2447","p1_2449","p1_2466","p1_2473","p1_2494","p1_2502","p2_1380"];
@@ -184,9 +210,9 @@ const full  = p => 'photos/full/'  + p + '.jpg';
 
 // ─── 언어 ─────────────────────────────────────
 const T = {
-  ko:{sub:'2026년 10월 3일 · 라까사호텔 광명', count:n=>`사진 ${n}장`, hint:'사진을 누르면 크게 볼 수 있어요', back:'← 돌아가기', save:'저장'},
-  en:{sub:'October 3, 2026 · La Casa Hotel Gwangmyeong', count:n=>`${n} Photos`, hint:'Tap a photo to view it larger', back:'← Back', save:'Save'},
-  zh:{sub:'2026年10月3日 · 光明 La Casa 酒店', count:n=>`共 ${n} 张照片`, hint:'点击照片可查看大图', back:'← 返回', save:'保存'}
+  ko:{sub:'2026년 10월 3일 · 라까사호텔 광명', count:n=>`사진 ${n}장`, hint:'사진을 누르면 크게 볼 수 있어요', back:'← 돌아가기', save:'사진 저장', lp:'사진을 길게 눌러 저장하세요'},
+  en:{sub:'October 3, 2026 · La Casa Hotel Gwangmyeong', count:n=>`${n} Photos`, hint:'Tap a photo to view it larger', back:'← Back', save:'Save Photo', lp:'Press and hold the photo to save it'},
+  zh:{sub:'2026年10月3日 · 光明 La Casa 酒店', count:n=>`共 ${n} 张照片`, hint:'点击照片可查看大图', back:'← 返回', save:'保存照片', lp:'长按图片，选择「保存图片」'}
 };
 let lang = 'ko';
 function setLang(l){
@@ -203,6 +229,7 @@ function setLang(l){
   back.textContent = t.back;
   back.href = './?lang=' + l + '#gallery';
   document.getElementById('lb-save-t').textContent = t.save;
+  document.getElementById('lp-tip').textContent = t.lp;
   try{ history.replaceState(history.state, '', '?lang=' + l + location.hash); }catch(e){}
 }
 // 같은 사이트에서 왔으면 뒤로 가기(스크롤 위치 유지), 아니면 메인으로 이동
@@ -281,10 +308,55 @@ function closeLb(){
 }
 window.addEventListener('popstate', () => { if(lbOpen) hideLb(); });
 document.getElementById('lb-close').addEventListener('click', closeLb);
+
+// ─── 저장 ─────────────────────────────────────
+// 위챗·QQ 등 중국 인앱 브라우저는 파일 다운로드를 막아두므로
+// "길게 눌러 저장" 안내로 전환, 그 외 모바일은 공유 시트(갤러리 저장),
+// 데스크톱 등은 blob 다운로드로 처리
+const UA = navigator.userAgent;
+const IN_APP = /MicroMessenger|WeChat|Weibo|QQ\//i.test(UA) || (/QQBrowser|UCBrowser|Quark|baiduboxapp/i.test(UA) && /Android/i.test(UA));
+const IS_MOBILE = /Android|iPhone|iPad|iPod/i.test(UA);
+const lpOv = document.getElementById('lp-ov');
+function showLp(url){
+  document.getElementById('lp-img').src = url;
+  lpOv.classList.add('active');
+}
+function hideLp(){ lpOv.classList.remove('active'); }
+document.getElementById('lp-close').addEventListener('click', hideLp);
+lpOv.addEventListener('click', e => { if(e.target === lpOv) hideLp(); });
+
+const saveBtn = document.getElementById('lb-save');
+saveBtn.addEventListener('click', async e => {
+  e.preventDefault(); e.stopPropagation();
+  const url = full(PHOTOS[idx]);
+  const name = saveBtn.getAttribute('download') || 'photo.jpg';
+  if(IN_APP){ showLp(url); return; }
+  saveBtn.classList.add('busy');
+  try{
+    if(IS_MOBILE && navigator.share && navigator.canShare){
+      const blob = await (await fetch(url)).blob();
+      const file = new File([blob], name, {type:'image/jpeg'});
+      if(navigator.canShare({files:[file]})){
+        try{ await navigator.share({files:[file]}); return; }
+        catch(err){ if(err && err.name === 'AbortError') return; }
+      }
+    }
+    const blob = await (await fetch(url)).blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  }catch(err){
+    showLp(url);                 // 마지막 수단: 길게 눌러 저장 안내
+  }finally{
+    saveBtn.classList.remove('busy');
+  }
+});
 document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); show(idx - 1); });
 document.getElementById('lb-next').addEventListener('click', e => { e.stopPropagation(); show(idx + 1); });
 lb.addEventListener('click', e => { if(e.target === lb) closeLb(); });
 document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && lpOv.classList.contains('active')){ hideLp(); return; }
   if(!lbOpen) return;
   if(e.key === 'Escape') closeLb();
   if(e.key === 'ArrowLeft') show(idx - 1);
