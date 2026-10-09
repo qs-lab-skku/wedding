@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex">
+<title>答謝宴 出席回執一覽</title>
+<style>
+@font-face{font-family:'WenKai';src:url('fonts/wenkai-tc-2.woff2') format('woff2');font-display:swap}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ivory:#f8f5ee;--paper:#fdfbf5;--red:#a4453c;--gold:#b8955a;--ink:#2a211c;--ink2:#55463c;--ink3:#8a776a;--border:#ddd2bd;
+--kai:"Kaiti SC","STKaiti","KaiTi","Songti SC",serif;--brush:"WenKai","Kaiti SC","STKaiti",serif}
+body{font-family:"Songti SC","STSongti-SC","Noto Serif CJK SC","SimSun",serif;background:var(--ivory);color:var(--ink);max-width:680px;margin:0 auto;padding:36px 18px 70px}
+h1{font-family:var(--brush);font-weight:400;font-size:1.5rem;letter-spacing:0.3em;padding-left:0.3em;text-align:center;margin-top:10px}
+.sub{font-family:var(--kai);text-align:center;color:var(--ink3);font-size:0.82rem;margin-top:10px;letter-spacing:0.1em}
+.stats{display:flex;gap:10px;margin:28px 0 18px}
+.st{flex:1;background:var(--paper);border:1px solid var(--border);border-radius:4px;padding:16px 8px;text-align:center}
+.st b{display:block;font-family:var(--brush);font-size:1.7rem;color:var(--red);font-weight:400}
+.st span{font-size:0.72rem;color:var(--ink3);letter-spacing:0.14em}
+table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--border);border-radius:4px;overflow:hidden;font-size:0.84rem}
+th{font-family:var(--kai);font-weight:600;color:var(--gold);letter-spacing:0.1em;padding:11px 8px;border-bottom:1px solid var(--border);text-align:left;font-size:0.76rem;white-space:nowrap}
+td{padding:11px 8px;border-bottom:1px dashed var(--border);color:var(--ink2);vertical-align:top;word-break:break-all}
+tr:last-child td{border-bottom:none}
+.yes{color:var(--red)}
+.no{color:var(--ink3)}
+.msg{font-size:0.78rem;color:var(--ink3)}
+#state{text-align:center;color:var(--ink3);font-family:var(--kai);padding:50px 20px;line-height:2}
+.btn{display:block;margin:26px auto 0;padding:11px 36px;border:1px solid var(--border);border-radius:30px;background:var(--paper);color:var(--ink2);font-size:0.84rem;letter-spacing:0.15em;cursor:pointer;font-family:inherit}
+footer{text-align:center;margin-top:40px;color:var(--ink3);font-size:0.72rem;letter-spacing:0.2em;font-family:var(--kai)}
+</style>
+</head>
+<body>
+<h1>出席回執一覽</h1>
+<div class="sub" id="upd">陸明 · 宋昇昱 答謝宴 · 2026.12.06</div>
+<div id="content" style="display:none">
+  <div class="stats">
+    <div class="st"><b id="s-yes">0</b><span>出席（組）</span></div>
+    <div class="st"><b id="s-ppl">0</b><span>出席人數</span></div>
+    <div class="st"><b id="s-no">0</b><span>缺席（組）</span></div>
+  </div>
+  <table>
+    <thead><tr><th>姓名</th><th>電話</th><th>出席</th><th>人數</th><th>留言 / 時間</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+</div>
+<div id="state">載入中…</div>
+<button class="btn" onclick="location.reload()">刷 新</button>
+<footer>此頁面已加密 · 請勿外傳鏈接</footer>
+
+<script>
+function b64uToBytes(s){
+  s = s.replace(/-/g,'+').replace(/_/g,'/');
+  while(s.length % 4) s += '=';
+  return Uint8Array.from(atob(s), c => c.charCodeAt(0));
+}
+async function load(){
+  const state = document.getElementById('state');
+  const m = location.hash.match(/k=([A-Za-z0-9_-]+)/);
+  if(!m){ state.textContent = '鏈接不完整：請使用帶密鑰（#k=…）的完整鏈接打開。'; return; }
+  let buf;
+  try{
+    const r = await fetch('rsvp-data.enc?t=' + Date.now(), {cache:'no-store'});
+    if(r.status === 404){ state.textContent = '暫無回執數據。\n系統每隔數小時自動彙總一次，請稍後再來看看。'; return; }
+    if(!r.ok) throw 0;
+    buf = (await r.text()).trim();
+  }catch(e){ state.textContent = '數據加載失敗，請稍後刷新重試。'; return; }
+  try{
+    const raw = Uint8Array.from(atob(buf), c => c.charCodeAt(0));
+    const key = await crypto.subtle.importKey('raw', b64uToBytes(m[1]), 'AES-GCM', false, ['decrypt']);
+    const pt = await crypto.subtle.decrypt({name:'AES-GCM', iv: raw.slice(0,12)}, key, raw.slice(12));
+    const data = JSON.parse(new TextDecoder().decode(pt));
+    render(data);
+  }catch(e){ state.textContent = '密鑰不正確，無法解密。請確認鏈接完整。'; }
+}
+function esc(s){ const d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
+function render(data){
+  const es = data.entries || [];
+  let yes = 0, no = 0, ppl = 0;
+  const rows = es.map(e => {
+    const att = (e.attend || '').includes('不') || (e.attend || '').includes('缺');
+    if(att){ no++; } else { yes++; ppl += parseInt(e.count) || 1; }
+    return '<tr><td>' + esc(e.name) + '</td><td>' + esc(e.phone) + '</td>'
+      + '<td class="' + (att ? 'no' : 'yes') + '">' + (att ? '缺席' : '出席') + '</td>'
+      + '<td>' + (att ? '—' : esc(e.count || 1)) + '</td>'
+      + '<td>' + esc(e.msg && e.msg !== '—' ? e.msg : '') + '<div class="msg">' + esc(e.time || '') + '</div></td></tr>';
+  }).join('');
+  document.getElementById('s-yes').textContent = yes;
+  document.getElementById('s-no').textContent = no;
+  document.getElementById('s-ppl').textContent = ppl;
+  document.getElementById('rows').innerHTML = rows || '<tr><td colspan="5" style="text-align:center;color:var(--ink3)">暫無回執</td></tr>';
+  if(data.updated) document.getElementById('upd').textContent = '最後更新：' + data.updated;
+  document.getElementById('state').style.display = 'none';
+  document.getElementById('content').style.display = '';
+}
+load();
+</script>
+</body>
+</html>
