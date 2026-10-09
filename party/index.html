@@ -39,6 +39,17 @@ section{padding:72px 30px;text-align:center}
 /* ── 封面 ─────────────────────────────── */
 #cover{position:relative;padding:0}
 #cover img{width:100%;display:block}
+.cv-frame{
+  position:absolute;inset:12px;pointer-events:none;
+  border:1px solid rgba(255,255,255,0.55);
+  outline:1px solid rgba(212,184,135,0.5);outline-offset:3px;
+}
+.cv-badge{
+  position:absolute;top:26px;left:50%;transform:translateX(-50%);
+  background:rgba(158,59,50,0.9);color:#fff;border:1px solid rgba(255,255,255,0.5);
+  border-radius:30px;padding:7px 20px;font-size:0.72rem;letter-spacing:0.3em;padding-left:calc(20px + 0.3em);
+  white-space:nowrap;
+}
 .cv-veil{
   position:absolute;inset:0;
   background:linear-gradient(to bottom,rgba(20,12,8,0.08) 55%,rgba(20,12,8,0.55) 100%);
@@ -54,7 +65,11 @@ section{padding:72px 30px;text-align:center}
 #head{
   padding:52px 30px 46px;
   background:linear-gradient(165deg,#a8402f,#8e2f26);
+  position:relative;overflow:hidden;
 }
+.lan{position:absolute;top:-6px;width:46px;opacity:0.95}
+.lan.l{left:16px}.lan.r{right:16px;top:-16px}
+.cloud{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);width:220px;opacity:0.1}
 .seal{
   width:86px;height:86px;margin:0 auto;
   background:#7d2a21;color:#fff;border-radius:10px;
@@ -104,6 +119,28 @@ section{padding:72px 30px;text-align:center}
   white-space:pre-line;text-align:center;
 }
 
+/* ── 拱形照片 ─────────────────────────── */
+.arch-wrap{display:flex;gap:10px;margin-top:38px;align-items:flex-end}
+.arch{
+  flex:1;overflow:hidden;background:var(--border);
+  border-radius:999px 999px 6px 6px;
+  border:3px solid #fff;outline:1px solid var(--gold2);
+  box-shadow:0 10px 26px rgba(90,50,30,0.16);
+}
+.arch img{width:100%;height:100%;object-fit:cover;display:block}
+.arch.a1{aspect-ratio:3/4.4}
+.arch.a2{aspect-ratio:3/3.6;flex:1.08}
+.arch.a3{aspect-ratio:3/4.4}
+.arch-cap{margin-top:16px;font-size:0.76rem;letter-spacing:0.35em;padding-left:0.35em;color:var(--gold)}
+
+/* ── 示意图 ───────────────────────────── */
+.map-card{
+  margin-top:26px;background:var(--paper);border:1px solid var(--border);border-radius:4px;
+  padding:18px 12px 8px;box-shadow:0 8px 30px rgba(90,70,40,0.08);
+}
+.map-card svg{width:100%;height:auto;display:block}
+.map-title{font-size:0.78rem;letter-spacing:0.3em;padding-left:0.3em;color:var(--gold);margin-bottom:8px}
+
 /* ── 分节标题 ─────────────────────────── */
 .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:34px}
 .sec-line{flex:1;height:1px;background:var(--border)}
@@ -150,7 +187,10 @@ section{padding:72px 30px;text-align:center}
 .pk-pics img{width:100%;display:block;border-radius:3px;margin-top:8px}
 
 /* ── 倒计时 ───────────────────────────── */
-#count{background:var(--red);color:#fff;padding:56px 24px}
+#count{
+  background:linear-gradient(165deg,#a8402f,#8e2f26);color:#fff;padding:56px 24px;
+  border-top:3px double var(--gold2);border-bottom:3px double var(--gold2);
+}
 .cd-label{font-size:0.8rem;letter-spacing:0.45em;padding-left:0.45em;opacity:0.85}
 .cd-num{font-size:3.4rem;margin:16px 0 6px;letter-spacing:0.05em}
 .cd-num small{font-size:1rem;letter-spacing:0.3em;margin-left:6px}
@@ -206,6 +246,8 @@ footer .mini-seal{color:#f0d9a8;font-size:1.2rem;display:block;margin-bottom:8px
 <div id="cover">
   <img src="../photos/full/p1_1997.jpg" alt="">
   <div class="cv-veil"></div>
+  <div class="cv-frame"></div>
+  <div class="cv-badge">2026 · 12 · 06 · 上海</div>
   <div class="cv-txt">
     <div class="cv-names">陆明 · 宋昇昱</div>
     <div class="cv-sub">答谢宴邀请函</div>
@@ -214,6 +256,8 @@ footer .mini-seal{color:#f0d9a8;font-size:1.2rem;display:block;margin-bottom:8px
 
 <!-- ═══ 请柬头 ═════════════════════════ -->
 <section id="head">
+  <svg class="lan l" viewBox="0 0 60 112"><line x1="30" y1="0" x2="30" y2="16" stroke="#e8c98f" stroke-width="2"/><rect x="21" y="15" width="18" height="6" rx="2" fill="#d4a855"/><ellipse cx="30" cy="48" rx="25" ry="25" fill="#c2392b" stroke="#7d2a21" stroke-width="1.5"/><ellipse cx="30" cy="48" rx="12" ry="25" fill="none" stroke="#e8c98f" stroke-width="1" opacity="0.7"/><ellipse cx="30" cy="48" rx="20" ry="25" fill="none" stroke="#e8c98f" stroke-width="1" opacity="0.45"/><text x="30" y="54" text-anchor="middle" font-size="15" fill="#f5e3bd">囍</text><rect x="21" y="71" width="18" height="6" rx="2" fill="#d4a855"/><line x1="30" y1="77" x2="30" y2="100" stroke="#e8c98f" stroke-width="2"/><circle cx="30" cy="104" r="4" fill="#d4a855"/></svg>
+  <svg class="lan r" viewBox="0 0 60 112"><line x1="30" y1="0" x2="30" y2="16" stroke="#e8c98f" stroke-width="2"/><rect x="21" y="15" width="18" height="6" rx="2" fill="#d4a855"/><ellipse cx="30" cy="48" rx="25" ry="25" fill="#c2392b" stroke="#7d2a21" stroke-width="1.5"/><ellipse cx="30" cy="48" rx="12" ry="25" fill="none" stroke="#e8c98f" stroke-width="1" opacity="0.7"/><ellipse cx="30" cy="48" rx="20" ry="25" fill="none" stroke="#e8c98f" stroke-width="1" opacity="0.45"/><text x="30" y="54" text-anchor="middle" font-size="15" fill="#f5e3bd">囍</text><rect x="21" y="71" width="18" height="6" rx="2" fill="#d4a855"/><line x1="30" y1="77" x2="30" y2="100" stroke="#e8c98f" stroke-width="2"/><circle cx="30" cy="104" r="4" fill="#d4a855"/></svg>
   <div class="seal">囍</div>
   <div class="head-title">答谢宴邀请函</div>
   <div class="head-sub">THANK-YOU BANQUET</div>
@@ -238,6 +282,12 @@ footer .mini-seal{color:#f0d9a8;font-size:1.2rem;display:block;margin-bottom:8px
       <span class="sign-name">陆万里</span>
     </div>
   </div>
+  <div class="arch-wrap">
+    <div class="arch a1"><img src="../photos/thumb/p1_0495.jpg" loading="lazy" alt=""></div>
+    <div class="arch a2"><img src="../photos/thumb/p1_1873.jpg" loading="lazy" alt=""></div>
+    <div class="arch a3"><img src="../photos/thumb/p2_0555.jpg" loading="lazy" alt=""></div>
+  </div>
+  <div class="arch-cap">二〇二六年十月三日 · 韩国婚礼</div>
 </section>
 
 <!-- ═══ 宴会信息 ═══════════════════════ -->
@@ -261,6 +311,50 @@ footer .mini-seal{color:#f0d9a8;font-size:1.2rem;display:block;margin-bottom:8px
     <button class="abtn" onclick="copyAddr()">⧉ 复制地址</button>
     <a class="abtn" href="https://uri.amap.com/search?keyword=%E6%B5%A6%E4%B8%9C%E9%A6%99%E6%A0%BC%E9%87%8C%E6%8B%89%E5%A4%A7%E9%85%92%E5%BA%97&city=%E4%B8%8A%E6%B5%B7">高德地图</a>
     <a class="abtn" href="https://map.baidu.com/search/%E6%B5%A6%E4%B8%9C%E9%A6%99%E6%A0%BC%E9%87%8C%E6%8B%89%E5%A4%A7%E9%85%92%E5%BA%97">百度地图</a>
+  </div>
+  <div class="map-card">
+    <div class="map-title">位 置 示 意 图</div>
+    <svg viewBox="0 0 360 322" font-family="inherit">
+      <!-- 黄浦江 -->
+      <path d="M0,0 C34,70 20,160 38,322 L0,322 Z" fill="#b9d2e2" opacity="0.75"/>
+      <text x="15" y="112" font-size="12" fill="#55809c"><tspan x="15">黄</tspan><tspan x="15" dy="22">浦</tspan><tspan x="15" dy="22">江</tspan></text>
+      <!-- 道路 -->
+      <path d="M46,0 C68,90 56,210 66,322" stroke="#e8dec6" stroke-width="9" fill="none"/>
+      <path d="M120,34 C250,12 336,66 334,152 C332,240 240,296 148,290" stroke="#e8dec6" stroke-width="8" fill="none"/>
+      <path d="M60,138 L352,126" stroke="#e8dec6" stroke-width="7"/>
+      <path d="M66,230 L348,240" stroke="#e8dec6" stroke-width="7"/>
+      <text x="246" y="121" font-size="9" fill="#a79879">花园石桥路</text>
+      <text x="150" y="257" font-size="9" fill="#a79879">富城路</text>
+      <text x="288" y="56" font-size="9" fill="#a79879">陆家嘴环路</text>
+      <text x="52" y="306" font-size="9" fill="#a79879" transform="rotate(-72 52 306)">滨江大道</text>
+      <!-- 东方明珠 -->
+      <line x1="196" y1="28" x2="196" y2="66" stroke="#c98a9e" stroke-width="2.5"/>
+      <circle cx="196" cy="48" r="9" fill="#d98a9e"/><circle cx="196" cy="30" r="4" fill="#d98a9e"/>
+      <text x="210" y="52" font-size="10" fill="#8a6070">东方明珠</text>
+      <!-- 正大广场 -->
+      <rect x="84" y="78" width="88" height="40" rx="4" fill="#efe6d2" stroke="#d8c9a8"/>
+      <text x="128" y="102" font-size="10" fill="#8a7a5f" text-anchor="middle">正大广场</text>
+      <!-- 지하철 -->
+      <circle cx="226" cy="98" r="9" fill="#2e9e5b"/><text x="226" y="102" font-size="10" fill="#fff" text-anchor="middle">M</text>
+      <text x="240" y="95" font-size="9.5" fill="#2e7d4f">陆家嘴站</text>
+      <text x="240" y="107" font-size="8.5" fill="#2e7d4f">地铁2号线</text>
+      <!-- 호텔 -->
+      <rect x="72" y="154" width="112" height="64" rx="6" fill="#9e3b32"/>
+      <text x="128" y="178" font-size="11.5" fill="#fff" text-anchor="middle" font-weight="bold">浦东香格里拉</text>
+      <text x="128" y="196" font-size="9" fill="#f0d9c2" text-anchor="middle">浦江楼 · 紫金楼</text>
+      <circle cx="174" cy="164" r="8" fill="#fff"/><text x="174" y="168" font-size="10" fill="#9e3b32" text-anchor="middle" font-weight="bold">P</text>
+      <text x="128" y="211" font-size="8.5" fill="#f5e3bd" text-anchor="middle">三层 苏州厅 囍</text>
+      <!-- 国金中心 -->
+      <rect x="258" y="140" width="80" height="44" rx="4" fill="#efe6d2" stroke="#d8c9a8"/>
+      <text x="298" y="158" font-size="10" fill="#8a7a5f" text-anchor="middle">国金中心</text>
+      <text x="298" y="172" font-size="8.5" fill="#b8955a" text-anchor="middle">备选停车 ①</text>
+      <!-- 未来资产大厦 -->
+      <rect x="226" y="258" width="100" height="42" rx="4" fill="#efe6d2" stroke="#d8c9a8"/>
+      <text x="276" y="276" font-size="10" fill="#8a7a5f" text-anchor="middle">未来资产大厦</text>
+      <text x="276" y="290" font-size="8.5" fill="#b8955a" text-anchor="middle">备选停车 ②</text>
+      <!-- 북쪽 표시 -->
+      <text x="340" y="24" font-size="11" fill="#a79879" text-anchor="middle">↑ 北</text>
+    </svg>
   </div>
 </section>
 
@@ -388,7 +482,7 @@ function copyAddr(){
 
 // ─── 婚礼掠影（固定精选 6 张）──────────
 (function(){
-  const picks = ['p2_0519','p1_1961','p1_2100','p2_0539','p1_1873','p1_2090'];
+  const picks = ['p2_0519','p1_1961','p1_2100','p2_0539','p1_2120','p1_2090','p1_0467','p2_1133','p1_2039'];
   const g = document.getElementById('pgrid');
   picks.forEach(p => {
     const a = document.createElement('a');
