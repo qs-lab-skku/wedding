@@ -109,19 +109,10 @@ section{padding:72px 30px;text-align:center}
 .letter-card::after{bottom:9px;right:9px;border-bottom:1px solid var(--gold2);border-right:1px solid var(--gold2)}
 .letter-txt{font-size:1rem;line-height:2.4;color:var(--ink2);letter-spacing:0.08em;font-family:var(--kai)}
 .letter-txt b{color:var(--ink);font-weight:600}
-/* 양가 혼주: 좌우 구분 없이 대칭 배치, 가운데 敬邀 인장 */
-.sign2{margin-top:34px;display:flex;align-items:center;justify-content:center;gap:24px}
-.sign-name{font-size:1.1rem;letter-spacing:0.22em;color:var(--ink);font-weight:600;flex:1;max-width:8em;font-family:var(--kai)}
-.sign-name:first-child{text-align:right}
-.sign-name:last-child{text-align:left}
-.sign-seal{
-  flex:0 0 auto;width:44px;height:44px;background:var(--red);color:#fff;border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:0.78rem;line-height:1.3;transform:rotate(-3deg);
-  box-shadow:0 4px 14px rgba(158,59,50,0.3);
-  border:1.5px solid rgba(255,255,255,0.4);outline:2px solid var(--red);
-  white-space:pre-line;text-align:center;
-}
+/* 낙관: 부모 성함 병기 + 敬邀 (전통 답사연 형식) */
+.sign3{margin-top:36px;text-align:center}
+.s3-names{font-family:var(--kai);font-size:1.12rem;letter-spacing:0.2em;color:var(--ink);font-weight:600}
+.s3-inv{margin-top:10px;font-size:0.8rem;letter-spacing:0.55em;padding-left:0.55em;color:var(--gold);font-family:var(--kai)}
 
 /* ── 拱形照片 ─────────────────────────── */
 .arch-wrap{display:flex;gap:10px;margin-top:38px;align-items:flex-end}
@@ -300,11 +291,9 @@ footer .mini-seal{color:var(--red);font-size:1.15rem;display:block;margin-bottom
       设答谢喜宴，敬备薄酌，<br>
       恭候光临。
     </p>
-    <div class="sign2">
-      <span class="sign-name">储慧莉</span>
-      <span class="sign-seal">敬
-邀</span>
-      <span class="sign-name">陆万里</span>
+    <div class="sign3">
+      <div class="s3-names">陆万里 · 储慧莉</div>
+      <div class="s3-inv">敬 邀</div>
     </div>
   </div>
   <div class="arch-wrap">
