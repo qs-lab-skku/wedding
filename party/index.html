@@ -212,6 +212,24 @@ section{padding:72px 30px;text-align:center}
 /* ── 回执 ─────────────────────────────── */
 #rsvp .letter-card{padding:36px 26px}
 .rsvp-txt{font-size:0.9rem;line-height:2.1;color:var(--ink2);font-family:var(--kai)}
+.f-label{display:block;margin:18px 2px 7px;font-size:0.8rem;letter-spacing:0.14em;color:var(--gold)}
+.f-label .req{color:var(--red2)}
+.f-input{
+  width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:4px;
+  background:#fff;color:var(--ink);font-size:0.95rem;font-family:inherit;
+}
+.f-input:focus{outline:none;border-color:var(--gold)}
+textarea.f-input{resize:none}
+.f-seg{display:flex;gap:10px}
+.seg{
+  flex:1;padding:12px 8px;border:1px solid var(--border);border-radius:4px;
+  background:#fff;color:var(--ink2);font-size:0.9rem;letter-spacing:0.08em;
+  cursor:pointer;font-family:var(--kai);
+}
+.seg.on{background:var(--red);border-color:var(--red);color:#fff}
+.f-err{margin-top:12px;font-size:0.8rem;color:var(--red2);text-align:center;min-height:1.2em}
+#rsvp-submit{border:none;cursor:pointer;font-family:inherit;margin-top:26px}
+#rsvp-submit.busy{opacity:0.6;pointer-events:none}
 .rsvp-btn{
   display:inline-block;margin-top:24px;padding:15px 52px;
   background:var(--red);color:#fff;border-radius:30px;
@@ -409,11 +427,43 @@ footer .mini-seal{color:#f0d9a8;font-size:1.2rem;display:block;margin-bottom:8px
 </section>
 
 <!-- ═══ 出席回执 ═══════════════════════ -->
-<section id="rsvp" class="reveal" style="padding-top:0;display:none">
+<section id="rsvp" class="reveal" style="padding-top:0">
   <div class="sec-head"><div class="sec-line"></div><div class="sec-label">出席回执</div><div class="sec-line"></div></div>
-  <div class="letter-card">
-    <p class="rsvp-txt">为妥善安排席位，<br>烦请您在百忙之中填写出席回执。</p>
-    <a class="rsvp-btn" id="rsvp-link" href="#">填写回执</a>
+  <div class="letter-card" style="text-align:left">
+    <p class="rsvp-txt" style="text-align:center">为妥善安排席位，烦请您填写出席回执。</p>
+    <form id="rsvp-form" novalidate>
+      <label class="f-label" for="f-name">姓名 <span class="req">*</span></label>
+      <input class="f-input" id="f-name" type="text" maxlength="30" placeholder="请输入您的姓名" required>
+      <label class="f-label" for="f-phone">联系电话 <span class="req">*</span></label>
+      <input class="f-input" id="f-phone" type="tel" maxlength="20" placeholder="方便联系的手机号" required>
+      <label class="f-label">是否出席 <span class="req">*</span></label>
+      <div class="f-seg" id="f-attend">
+        <button type="button" data-v="出席" class="seg">欣然出席</button>
+        <button type="button" data-v="不能出席" class="seg">遗憾缺席</button>
+      </div>
+      <div id="f-count-wrap">
+        <label class="f-label" for="f-count">出席人数（含本人）</label>
+        <select class="f-input" id="f-count">
+          <option>1</option><option>2</option><option>3</option><option>4</option>
+          <option>5</option><option>6</option><option>7</option><option>8</option>
+        </select>
+      </div>
+      <label class="f-label" for="f-msg">留言（可不填）</label>
+      <textarea class="f-input" id="f-msg" rows="2" maxlength="200" placeholder="想对我们说的话"></textarea>
+      <button type="submit" class="rsvp-btn" id="rsvp-submit" style="display:block;width:100%;text-align:center">提 交 回 执</button>
+      <div class="f-err" id="f-err"></div>
+    </form>
+    <div id="rsvp-ok" style="display:none;text-align:center">
+      <div style="font-size:2.4rem;color:var(--red)">囍</div>
+      <p class="rsvp-txt" style="text-align:center;margin-top:10px">已收到您的回执，谢谢！<br>期待与您相聚。</p>
+    </div>
+    <div id="rsvp-fail" style="display:none;text-align:center">
+      <p class="rsvp-txt" style="text-align:center">网络原因提交未成功，<br>烦请短信或致电告知出席信息：</p>
+      <div class="addr-btns" style="margin-top:16px">
+        <a class="abtn" href="tel:+821081288640">致电新娘</a>
+        <a class="abtn" href="sms:+821081288640">发送短信</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -426,12 +476,65 @@ footer .mini-seal{color:#f0d9a8;font-size:1.2rem;display:block;margin-bottom:8px
 <div class="toast" id="toast">地址已复制</div>
 
 <script>
-// ─── 出席回执链接：腾讯问卷链接就绪后填入此处 ───
-const RSVP_URL = '';
-if(RSVP_URL){
-  document.getElementById('rsvp-link').href = RSVP_URL;
-  document.getElementById('rsvp').style.display = '';
-}
+// ─── 出席回执: FormSubmit 로 메일 발송 (서버 불필요) ───
+// 제출되면 seunguk@skku.edu 메일함에 표 형식으로 도착.
+// 최초 1회 제출 시 활성화 메일이 오며, Activate 후부터 정상 수신된다.
+const RSVP_ENDPOINT = 'https://formsubmit.co/ajax/seunguk@skku.edu';
+(function(){
+  const form = document.getElementById('rsvp-form');
+  if(!form) return;
+  let attend = '';
+  const segs = document.querySelectorAll('#f-attend .seg');
+  const cntWrap = document.getElementById('f-count-wrap');
+  segs.forEach(s => s.addEventListener('click', () => {
+    attend = s.dataset.v;
+    segs.forEach(x => x.classList.toggle('on', x === s));
+    cntWrap.style.display = (attend === '出席') ? '' : 'none';
+  }));
+  const err = document.getElementById('f-err');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    err.textContent = '';
+    const name = document.getElementById('f-name').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    if(!name){ err.textContent = '请填写姓名'; return; }
+    if(!phone){ err.textContent = '请填写联系电话'; return; }
+    if(!attend){ err.textContent = '请选择是否出席'; return; }
+    const btn = document.getElementById('rsvp-submit');
+    btn.classList.add('busy'); btn.textContent = '提交中…';
+    const payload = {
+      '姓名': name,
+      '联系电话': phone,
+      '是否出席': attend,
+      '出席人数': attend === '出席' ? document.getElementById('f-count').value : '0',
+      '留言': document.getElementById('f-msg').value.trim() || '—',
+      _subject: '【答谢宴回执】' + name + ' · ' + attend,
+      _template: 'table',
+      _captcha: 'false'
+    };
+    try{
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 12000);
+      const r = await fetch(RSVP_ENDPOINT, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json', 'Accept':'application/json'},
+        body: JSON.stringify(payload),
+        signal: ctrl.signal
+      });
+      clearTimeout(timer);
+      if(!r.ok) throw new Error('http ' + r.status);
+      form.style.display = 'none';
+      document.querySelector('#rsvp .rsvp-txt').style.display = 'none';
+      document.getElementById('rsvp-ok').style.display = '';
+    }catch(ex){
+      form.style.display = 'none';
+      document.querySelector('#rsvp .rsvp-txt').style.display = 'none';
+      document.getElementById('rsvp-fail').style.display = '';
+    }finally{
+      btn.classList.remove('busy'); btn.textContent = '提 交 回 执';
+    }
+  });
+})();
 
 // ─── 停车路线图 펼치기 ─────────────────
 function togglePk(btn){
