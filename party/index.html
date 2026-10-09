@@ -15,6 +15,11 @@
 <meta property="og:locale" content="zh_CN">
 <style>
 /* 中国大陆无法访问 Google Fonts——全部使用系统宋体系字体 */
+@font-face{
+  font-family:'MSZ';
+  src:url('fonts/msz-sub.woff2') format('woff2');
+  font-display:swap;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --ivory:#f8f5ee;
@@ -28,6 +33,7 @@
   --ink3:#8a776a;
   --border:#ddd2bd;
   --kai:"Kaiti SC","STKaiti","KaiTi","BiauKai","Songti SC",serif;
+  --brush:"MSZ","Kaiti SC","STKaiti","KaiTi",serif;
 }
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
@@ -60,7 +66,7 @@ section{padding:72px 30px;text-align:center}
   position:absolute;left:0;right:0;bottom:30px;color:#fff;text-align:center;
   text-shadow:0 1px 14px rgba(0,0,0,0.5);
 }
-.cv-names{font-size:clamp(1.5rem,6.4vw,2.2rem);letter-spacing:0.22em;font-weight:400}
+.cv-names{font-size:clamp(1.7rem,7vw,2.5rem);letter-spacing:0.18em;font-weight:400;font-family:var(--brush)}
 .cv-sub{font-size:0.8rem;letter-spacing:0.5em;margin-top:10px;opacity:0.9;padding-left:0.5em}
 
 /* ── 请柬头 ───────────────────────────── */
@@ -72,6 +78,10 @@ section{padding:72px 30px;text-align:center}
 .plum{position:absolute;top:10px;right:-12px;width:170px;opacity:0.5;pointer-events:none}
 .plum.f{left:-16px;right:auto;transform:scaleX(-1);top:auto;bottom:4px;width:130px;opacity:0.35}
 .lan{display:none}
+.bird{position:absolute;pointer-events:none}
+.bird.b1{top:46px;right:96px;width:50px;transform:scaleX(-1)}
+.bird.b2{top:30px;right:30px;width:42px}
+.cups{display:block;width:76px;margin:0 auto 14px;opacity:0.85}
 .lan.l{left:16px}.lan.r{right:16px;top:-16px}
 .cloud{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);width:220px;opacity:0.1}
 .seal{
@@ -84,10 +94,10 @@ section{padding:72px 30px;text-align:center}
   border:1px solid rgba(255,255,255,0.5);outline:1.5px solid var(--red);
 }
 .head-title{
-  margin-top:32px;font-size:clamp(1.4rem,5.6vw,1.9rem);
-  letter-spacing:0.5em;padding-left:0.5em;color:var(--ink);font-weight:400;
+  margin-top:32px;font-size:clamp(1.7rem,6.6vw,2.3rem);
+  letter-spacing:0.32em;padding-left:0.32em;color:var(--ink);font-weight:400;font-family:var(--brush);
 }
-.head-sub{margin-top:13px;font-size:0.82rem;letter-spacing:0.22em;padding-left:0.22em;color:var(--ink3);font-family:var(--kai)}
+.head-sub{margin-top:13px;font-size:0.95rem;letter-spacing:0.2em;padding-left:0.2em;color:var(--ink3);font-family:var(--brush)}
 .gline{width:52px;height:1px;background:linear-gradient(to right,transparent,var(--gold2),transparent);margin:26px auto 0}
 .edge{height:3px;background:linear-gradient(to right,transparent,var(--gold2),transparent);opacity:0.7}
 
@@ -111,8 +121,9 @@ section{padding:72px 30px;text-align:center}
 .letter-txt b{color:var(--ink);font-weight:600}
 /* 낙관: 부모 성함 병기 + 敬邀 (전통 답사연 형식) */
 .sign3{margin-top:36px;text-align:center}
-.s3-names{font-family:var(--kai);font-size:1.12rem;letter-spacing:0.2em;color:var(--ink);font-weight:600}
-.s3-inv{margin-top:10px;font-size:0.8rem;letter-spacing:0.55em;padding-left:0.55em;color:var(--gold);font-family:var(--kai)}
+.s3-names{font-family:var(--brush);font-size:1.35rem;letter-spacing:0.16em;color:var(--ink)}
+.s3-names2{font-family:var(--brush);font-size:1.05rem;letter-spacing:0.14em;color:var(--ink2);margin-top:7px}
+.s3-inv{margin-top:11px;font-size:0.95rem;letter-spacing:0.55em;padding-left:0.55em;color:var(--gold);font-family:var(--brush)}
 
 /* ── 拱形照片 ─────────────────────────── */
 .arch-wrap{display:flex;gap:10px;margin-top:38px;align-items:flex-end}
@@ -126,7 +137,7 @@ section{padding:72px 30px;text-align:center}
 .arch.a1{aspect-ratio:3/4.4}
 .arch.a2{aspect-ratio:3/3.6;flex:1.08}
 .arch.a3{aspect-ratio:3/4.4}
-.arch-cap{margin-top:16px;font-size:0.78rem;letter-spacing:0.35em;padding-left:0.35em;color:var(--gold);font-family:var(--kai)}
+.arch-cap{margin-top:16px;font-size:0.92rem;letter-spacing:0.3em;padding-left:0.3em;color:var(--gold);font-family:var(--brush)}
 
 /* ── 示意图 ───────────────────────────── */
 .map-card{
@@ -134,12 +145,12 @@ section{padding:72px 30px;text-align:center}
   padding:18px 12px 8px;box-shadow:0 8px 30px rgba(90,70,40,0.08);
 }
 .map-card svg{width:100%;height:auto;display:block}
-.map-title{font-size:0.78rem;letter-spacing:0.3em;padding-left:0.3em;color:var(--gold);margin-bottom:8px}
+.map-title{font-size:0.95rem;letter-spacing:0.3em;padding-left:0.3em;color:var(--gold);margin-bottom:8px;font-family:var(--brush)}
 
 /* ── 分节标题 ─────────────────────────── */
 .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:34px}
 .sec-line{flex:1;height:1px;background:var(--border)}
-.sec-label{font-size:0.84rem;letter-spacing:0.4em;padding-left:0.4em;color:var(--ink2);white-space:nowrap;font-family:var(--kai)}
+.sec-label{font-size:1.05rem;letter-spacing:0.34em;padding-left:0.34em;color:var(--ink2);white-space:nowrap;font-family:var(--brush)}
 .sec-label::before,.sec-label::after{content:'·';color:var(--gold);margin:0 8px}
 
 /* ── 宴会信息 ─────────────────────────── */
@@ -187,8 +198,8 @@ section{padding:72px 30px;text-align:center}
   color:var(--ink);padding:54px 24px;
   border-top:1px solid var(--border);border-bottom:1px solid var(--border);
 }
-.cd-label{font-size:0.82rem;letter-spacing:0.45em;padding-left:0.45em;color:var(--gold);font-family:var(--kai)}
-.cd-num{font-size:3.2rem;margin:14px 0 6px;letter-spacing:0.05em;color:var(--red);font-weight:300}
+.cd-label{font-size:1rem;letter-spacing:0.4em;padding-left:0.4em;color:var(--gold);font-family:var(--brush)}
+.cd-num{font-size:3.2rem;margin:14px 0 6px;letter-spacing:0.05em;color:var(--red);font-weight:300;font-family:var(--brush)}
 .cd-num small{font-size:1rem;letter-spacing:0.3em;margin-left:6px;color:var(--ink3)}
 .cd-sub{font-size:0.8rem;letter-spacing:0.2em;color:var(--ink3)}
 
@@ -272,6 +283,30 @@ footer .mini-seal{color:var(--red);font-size:1.15rem;display:block;margin-bottom
 <section id="head">
   <svg class="plum" viewBox="0 0 200 150" fill="none"><path d="M200,14 C156,22 128,34 104,58 C88,74 78,96 74,118" stroke="#a89070" stroke-width="2" stroke-linecap="round" opacity="0.65"/><path d="M136,32 C128,46 124,58 124,70" stroke="#a89070" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/><path d="M104,58 C96,60 86,60 78,57" stroke="#a89070" stroke-width="1.3" stroke-linecap="round" opacity="0.6"/><circle cx="124.0" cy="67.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="128.8" cy="70.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="126.9" cy="76.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="121.1" cy="76.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="119.2" cy="70.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="124" cy="72" r="1.7" fill="#c9a05a"/><circle cx="77.0" cy="51.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="81.8" cy="54.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="79.9" cy="60.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="74.1" cy="60.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="72.2" cy="54.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="77" cy="56" r="1.7" fill="#c9a05a"/><circle cx="72.0" cy="115.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="76.8" cy="118.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="74.9" cy="124.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="69.1" cy="124.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="67.2" cy="118.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="72" cy="120" r="1.7" fill="#c9a05a"/><circle cx="150" cy="26" r="2.4" fill="rgba(193,104,94,0.45)"/><circle cx="96" cy="66" r="2.2" fill="rgba(193,104,94,0.4)"/></svg>
   <svg class="plum f" viewBox="0 0 200 150" fill="none"><path d="M200,14 C156,22 128,34 104,58 C88,74 78,96 74,118" stroke="#a89070" stroke-width="2" stroke-linecap="round" opacity="0.65"/><path d="M136,32 C128,46 124,58 124,70" stroke="#a89070" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/><path d="M104,58 C96,60 86,60 78,57" stroke="#a89070" stroke-width="1.3" stroke-linecap="round" opacity="0.6"/><circle cx="124.0" cy="67.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="128.8" cy="70.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="126.9" cy="76.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="121.1" cy="76.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="119.2" cy="70.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="124" cy="72" r="1.7" fill="#c9a05a"/><circle cx="77.0" cy="51.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="81.8" cy="54.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="79.9" cy="60.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="74.1" cy="60.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="72.2" cy="54.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="77" cy="56" r="1.7" fill="#c9a05a"/><circle cx="72.0" cy="115.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="76.8" cy="118.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="74.9" cy="124.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="69.1" cy="124.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="67.2" cy="118.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="72" cy="120" r="1.7" fill="#c9a05a"/><circle cx="150" cy="26" r="2.4" fill="rgba(193,104,94,0.45)"/><circle cx="96" cy="66" r="2.2" fill="rgba(193,104,94,0.4)"/></svg>
+  <svg class="bird b1" viewBox="0 0 80 64" fill="none">
+<path d="M58,30 q14,-4 20,-13" stroke="#3f3b35" stroke-width="3" stroke-linecap="round"/>
+<path d="M57,35 q12,-1 18,-6" stroke="#3f3b35" stroke-width="2.2" stroke-linecap="round"/>
+<ellipse cx="38" cy="32" rx="17" ry="13" fill="#3f3b35"/>
+<circle cx="22" cy="22" r="9" fill="#3f3b35"/>
+<ellipse cx="33" cy="37" rx="10" ry="7.5" fill="#f7f4ec"/>
+<path d="M13,21 l-8,2.5 8,3 z" fill="#c9a05a"/>
+<circle cx="20" cy="20" r="1.8" fill="#f7f4ec"/>
+<circle cx="25" cy="27.5" r="2.2" fill="rgba(193,104,94,0.55)"/>
+<path d="M34,26 q10,-3 16,2 q-7,6 -16,4 z" fill="#57524b"/>
+<path d="M31,44.5 l-2,8 M39,45 l0,8" stroke="#3f3b35" stroke-width="1.6" stroke-linecap="round"/>
+</svg>
+  <svg class="bird b2" viewBox="0 0 80 64" fill="none">
+<path d="M58,30 q14,-4 20,-13" stroke="#3f3b35" stroke-width="3" stroke-linecap="round"/>
+<path d="M57,35 q12,-1 18,-6" stroke="#3f3b35" stroke-width="2.2" stroke-linecap="round"/>
+<ellipse cx="38" cy="32" rx="17" ry="13" fill="#3f3b35"/>
+<circle cx="22" cy="22" r="9" fill="#3f3b35"/>
+<ellipse cx="33" cy="37" rx="10" ry="7.5" fill="#f7f4ec"/>
+<path d="M13,21 l-8,2.5 8,3 z" fill="#c9a05a"/>
+<circle cx="20" cy="20" r="1.8" fill="#f7f4ec"/>
+<circle cx="25" cy="27.5" r="2.2" fill="rgba(193,104,94,0.55)"/>
+<path d="M34,26 q10,-3 16,2 q-7,6 -16,4 z" fill="#57524b"/>
+<path d="M31,44.5 l-2,8 M39,45 l0,8" stroke="#3f3b35" stroke-width="1.6" stroke-linecap="round"/>
+</svg>
   <div class="seal">囍</div>
   <div class="head-title">答谢宴邀请函</div>
   <div class="head-sub">谨订于二〇二六年十二月六日</div>
@@ -283,7 +318,7 @@ footer .mini-seal{color:var(--red);font-size:1.15rem;display:block;margin-bottom
   <div class="letter-card">
     <div class="wm">囍</div>
     <p class="letter-txt">
-      陆明 与 宋昇昱<br>
+      小女陆明 与 宋昇昱<br>
       已于二〇二六年十月三日<br>
       在韩国喜结连理。<br><br>
       婚礼已成，深谢厚爱。<br>
@@ -293,6 +328,7 @@ footer .mini-seal{color:var(--red);font-size:1.15rem;display:block;margin-bottom
     </p>
     <div class="sign3">
       <div class="s3-names">陆万里 · 储慧莉</div>
+      <div class="s3-names2">携女陆明 暨婿宋昇昱</div>
       <div class="s3-inv">敬 邀</div>
     </div>
   </div>
@@ -407,6 +443,10 @@ footer .mini-seal{color:var(--red);font-size:1.15rem;display:block;margin-bottom
 
 <!-- ═══ 倒计时 ═════════════════════════ -->
 <section id="count">
+  <svg class="cups" viewBox="0 0 90 46" fill="none">
+<g transform="rotate(-13 27 22)"><path d="M14,11 h26 q-2,13 -13,15 q-11,-2 -13,-15 z" stroke="#9a8468" stroke-width="2"/><path d="M27,27 v8 M20,37 h14" stroke="#9a8468" stroke-width="2" stroke-linecap="round"/><path d="M18,15 h18" stroke="rgba(164,69,60,0.55)" stroke-width="3" stroke-linecap="round"/></g>
+<g transform="rotate(13 63 22)"><path d="M50,11 h26 q-2,13 -13,15 q-11,-2 -13,-15 z" stroke="#9a8468" stroke-width="2"/><path d="M63,27 v8 M56,37 h14" stroke="#9a8468" stroke-width="2" stroke-linecap="round"/><path d="M54,15 h18" stroke="rgba(164,69,60,0.55)" stroke-width="3" stroke-linecap="round"/></g>
+</svg>
   <div class="cd-label">距答谢宴还有</div>
   <div class="cd-num" id="cd-days">—<small>天</small></div>
   <div class="cd-sub">2026.12.06 · 晚上7点</div>
