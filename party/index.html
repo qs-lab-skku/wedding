@@ -19,8 +19,8 @@
 :root{
   --ivory:#f8f5ee;
   --paper:#fdfbf5;
-  --red:#9e3b32;
-  --red2:#b5483c;
+  --red:#a4453c;
+  --red2:#b65c50;
   --gold:#b8955a;
   --gold2:#d4b887;
   --ink:#2a211c;
@@ -42,18 +42,19 @@ section{padding:72px 30px;text-align:center}
 #cover img{width:100%;display:block}
 .cv-frame{
   position:absolute;inset:12px;pointer-events:none;
-  border:1px solid rgba(255,255,255,0.55);
-  outline:1px solid rgba(212,184,135,0.5);outline-offset:3px;
+  border:1px solid rgba(255,255,255,0.4);
+  outline:1px solid rgba(212,184,135,0.3);outline-offset:3px;
 }
 .cv-badge{
   position:absolute;top:26px;left:50%;transform:translateX(-50%);
-  background:rgba(158,59,50,0.9);color:#fff;border:1px solid rgba(255,255,255,0.5);
+  background:rgba(255,255,255,0.16);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  color:#fff;border:1px solid rgba(255,255,255,0.55);
   border-radius:30px;padding:7px 20px;font-size:0.72rem;letter-spacing:0.3em;padding-left:calc(20px + 0.3em);
   white-space:nowrap;
 }
 .cv-veil{
   position:absolute;inset:0;
-  background:linear-gradient(to bottom,rgba(20,12,8,0.08) 55%,rgba(20,12,8,0.55) 100%);
+  background:linear-gradient(to bottom,rgba(20,12,8,0.03) 60%,rgba(20,12,8,0.45) 100%);
 }
 .cv-txt{
   position:absolute;left:0;right:0;bottom:30px;color:#fff;text-align:center;
@@ -64,35 +65,37 @@ section{padding:72px 30px;text-align:center}
 
 /* ── 请柬头 ───────────────────────────── */
 #head{
-  padding:52px 30px 46px;
-  background:linear-gradient(165deg,#a8402f,#8e2f26);
+  padding:58px 30px 50px;
+  background:linear-gradient(to bottom,rgba(164,69,60,0.05),rgba(164,69,60,0));
   position:relative;overflow:hidden;
 }
-.lan{position:absolute;top:-6px;width:46px;opacity:0.95}
+.plum{position:absolute;top:10px;right:-12px;width:170px;opacity:0.5;pointer-events:none}
+.plum.f{left:-16px;right:auto;transform:scaleX(-1);top:auto;bottom:4px;width:130px;opacity:0.35}
+.lan{display:none}
 .lan.l{left:16px}.lan.r{right:16px;top:-16px}
 .cloud{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);width:220px;opacity:0.1}
 .seal{
-  width:86px;height:86px;margin:0 auto;
-  background:#7d2a21;color:#fff;border-radius:10px;
+  width:68px;height:68px;margin:0 auto;
+  background:var(--red);color:#fffdf6;border-radius:9px;
   display:flex;align-items:center;justify-content:center;
-  font-size:3rem;line-height:1;
-  transform:rotate(-3deg);
-  box-shadow:0 8px 24px rgba(60,16,10,0.4);
-  border:2px solid var(--gold2);outline:3px solid #7d2a21;
+  font-size:2.3rem;line-height:1;
+  transform:rotate(-2deg);
+  box-shadow:0 4px 14px rgba(164,69,60,0.22);
+  border:1px solid rgba(255,255,255,0.5);outline:1.5px solid var(--red);
 }
 .head-title{
-  margin-top:34px;font-size:clamp(1.5rem,6vw,2rem);
-  letter-spacing:0.5em;padding-left:0.5em;color:#f5e3bd;
+  margin-top:32px;font-size:clamp(1.4rem,5.6vw,1.9rem);
+  letter-spacing:0.5em;padding-left:0.5em;color:var(--ink);font-weight:400;
 }
-.head-sub{margin-top:14px;font-size:0.82rem;letter-spacing:0.22em;padding-left:0.22em;color:rgba(255,255,255,0.78);font-family:var(--kai)}
+.head-sub{margin-top:13px;font-size:0.82rem;letter-spacing:0.22em;padding-left:0.22em;color:var(--ink3);font-family:var(--kai)}
 .gline{width:52px;height:1px;background:linear-gradient(to right,transparent,var(--gold2),transparent);margin:26px auto 0}
-.edge{height:9px;background:var(--red);border-bottom:3px double var(--gold2)}
+.edge{height:3px;background:linear-gradient(to right,transparent,var(--gold2),transparent);opacity:0.7}
 
 /* ── 请柬正文 ─────────────────────────── */
 #letter{padding-top:64px}
 .wm{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-size:11rem;color:rgba(158,59,50,0.05);pointer-events:none;user-select:none;
+  font-size:11rem;color:rgba(164,69,60,0.04);pointer-events:none;user-select:none;
 }
 .letter-card{
   background:var(--paper);border:1px solid var(--border);border-radius:4px;
@@ -125,8 +128,8 @@ section{padding:72px 30px;text-align:center}
 .arch{
   flex:1;overflow:hidden;background:var(--border);
   border-radius:999px 999px 6px 6px;
-  border:3px solid #fff;outline:1px solid var(--gold2);
-  box-shadow:0 10px 26px rgba(90,50,30,0.16);
+  border:2px solid #fff;outline:1px solid rgba(212,184,135,0.55);
+  box-shadow:0 8px 20px rgba(90,50,30,0.1);
 }
 .arch img{width:100%;height:100%;object-fit:cover;display:block}
 .arch.a1{aspect-ratio:3/4.4}
@@ -145,7 +148,7 @@ section{padding:72px 30px;text-align:center}
 /* ── 分节标题 ─────────────────────────── */
 .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:34px}
 .sec-line{flex:1;height:1px;background:var(--border)}
-.sec-label{font-size:0.86rem;letter-spacing:0.4em;padding-left:0.4em;color:var(--red);white-space:nowrap}
+.sec-label{font-size:0.84rem;letter-spacing:0.4em;padding-left:0.4em;color:var(--ink2);white-space:nowrap;font-family:var(--kai)}
 .sec-label::before,.sec-label::after{content:'·';color:var(--gold);margin:0 8px}
 
 /* ── 宴会信息 ─────────────────────────── */
@@ -189,13 +192,14 @@ section{padding:72px 30px;text-align:center}
 
 /* ── 倒计时 ───────────────────────────── */
 #count{
-  background:linear-gradient(165deg,#a8402f,#8e2f26);color:#fff;padding:56px 24px;
-  border-top:3px double var(--gold2);border-bottom:3px double var(--gold2);
+  background:linear-gradient(to bottom,rgba(164,69,60,0.045),rgba(164,69,60,0.015));
+  color:var(--ink);padding:54px 24px;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
 }
-.cd-label{font-size:0.82rem;letter-spacing:0.45em;padding-left:0.45em;opacity:0.88;font-family:var(--kai)}
-.cd-num{font-size:3.4rem;margin:16px 0 6px;letter-spacing:0.05em}
-.cd-num small{font-size:1rem;letter-spacing:0.3em;margin-left:6px}
-.cd-sub{font-size:0.8rem;letter-spacing:0.2em;opacity:0.85}
+.cd-label{font-size:0.82rem;letter-spacing:0.45em;padding-left:0.45em;color:var(--gold);font-family:var(--kai)}
+.cd-num{font-size:3.2rem;margin:14px 0 6px;letter-spacing:0.05em;color:var(--red);font-weight:300}
+.cd-num small{font-size:1rem;letter-spacing:0.3em;margin-left:6px;color:var(--ink3)}
+.cd-sub{font-size:0.8rem;letter-spacing:0.2em;color:var(--ink3)}
 
 /* ── 照片 ─────────────────────────────── */
 #photos{padding-left:0;padding-right:0}
@@ -232,20 +236,20 @@ textarea.f-input{resize:none}
 #rsvp-submit.busy{opacity:0.6;pointer-events:none}
 .rsvp-btn{
   display:inline-block;margin-top:24px;padding:15px 52px;
-  background:var(--red);color:#fff;border-radius:30px;
+  background:var(--red);color:#fffdf6;border-radius:4px;
   font-size:0.95rem;letter-spacing:0.25em;padding-left:calc(52px + 0.25em);
-  text-decoration:none;box-shadow:0 6px 18px rgba(158,59,50,0.3);
+  text-decoration:none;box-shadow:0 4px 12px rgba(164,69,60,0.2);
 }
 .rsvp-btn:active{transform:scale(0.97)}
 
 /* ── 页尾 ─────────────────────────────── */
 footer{
   text-align:center;padding:44px 20px 56px;
-  background:linear-gradient(165deg,#a8402f,#8e2f26);
-  border-top:3px double var(--gold2);
-  font-size:0.78rem;color:rgba(255,255,255,0.85);letter-spacing:0.25em;line-height:2.2;
+  background:linear-gradient(to bottom,rgba(164,69,60,0.03),rgba(164,69,60,0));
+  border-top:1px solid var(--border);
+  font-size:0.78rem;color:var(--ink3);letter-spacing:0.25em;line-height:2.2;
 }
-footer .mini-seal{color:#f0d9a8;font-size:1.2rem;display:block;margin-bottom:8px}
+footer .mini-seal{color:var(--red);font-size:1.15rem;display:block;margin-bottom:8px}
 
 .toast{
   position:fixed;left:50%;bottom:44px;transform:translateX(-50%) translateY(16px);
@@ -275,8 +279,8 @@ footer .mini-seal{color:#f0d9a8;font-size:1.2rem;display:block;margin-bottom:8px
 
 <!-- ═══ 请柬头 ═════════════════════════ -->
 <section id="head">
-  <svg class="lan l" viewBox="0 0 60 112"><line x1="30" y1="0" x2="30" y2="16" stroke="#e8c98f" stroke-width="2"/><rect x="21" y="15" width="18" height="6" rx="2" fill="#d4a855"/><ellipse cx="30" cy="48" rx="25" ry="25" fill="#c2392b" stroke="#7d2a21" stroke-width="1.5"/><ellipse cx="30" cy="48" rx="12" ry="25" fill="none" stroke="#e8c98f" stroke-width="1" opacity="0.7"/><ellipse cx="30" cy="48" rx="20" ry="25" fill="none" stroke="#e8c98f" stroke-width="1" opacity="0.45"/><text x="30" y="54" text-anchor="middle" font-size="15" fill="#f5e3bd">囍</text><rect x="21" y="71" width="18" height="6" rx="2" fill="#d4a855"/><line x1="30" y1="77" x2="30" y2="100" stroke="#e8c98f" stroke-width="2"/><circle cx="30" cy="104" r="4" fill="#d4a855"/></svg>
-  <svg class="lan r" viewBox="0 0 60 112"><line x1="30" y1="0" x2="30" y2="16" stroke="#e8c98f" stroke-width="2"/><rect x="21" y="15" width="18" height="6" rx="2" fill="#d4a855"/><ellipse cx="30" cy="48" rx="25" ry="25" fill="#c2392b" stroke="#7d2a21" stroke-width="1.5"/><ellipse cx="30" cy="48" rx="12" ry="25" fill="none" stroke="#e8c98f" stroke-width="1" opacity="0.7"/><ellipse cx="30" cy="48" rx="20" ry="25" fill="none" stroke="#e8c98f" stroke-width="1" opacity="0.45"/><text x="30" y="54" text-anchor="middle" font-size="15" fill="#f5e3bd">囍</text><rect x="21" y="71" width="18" height="6" rx="2" fill="#d4a855"/><line x1="30" y1="77" x2="30" y2="100" stroke="#e8c98f" stroke-width="2"/><circle cx="30" cy="104" r="4" fill="#d4a855"/></svg>
+  <svg class="plum" viewBox="0 0 200 150" fill="none"><path d="M200,14 C156,22 128,34 104,58 C88,74 78,96 74,118" stroke="#a89070" stroke-width="2" stroke-linecap="round" opacity="0.65"/><path d="M136,32 C128,46 124,58 124,70" stroke="#a89070" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/><path d="M104,58 C96,60 86,60 78,57" stroke="#a89070" stroke-width="1.3" stroke-linecap="round" opacity="0.6"/><circle cx="124.0" cy="67.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="128.8" cy="70.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="126.9" cy="76.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="121.1" cy="76.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="119.2" cy="70.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="124" cy="72" r="1.7" fill="#c9a05a"/><circle cx="77.0" cy="51.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="81.8" cy="54.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="79.9" cy="60.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="74.1" cy="60.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="72.2" cy="54.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="77" cy="56" r="1.7" fill="#c9a05a"/><circle cx="72.0" cy="115.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="76.8" cy="118.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="74.9" cy="124.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="69.1" cy="124.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="67.2" cy="118.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="72" cy="120" r="1.7" fill="#c9a05a"/><circle cx="150" cy="26" r="2.4" fill="rgba(193,104,94,0.45)"/><circle cx="96" cy="66" r="2.2" fill="rgba(193,104,94,0.4)"/></svg>
+  <svg class="plum f" viewBox="0 0 200 150" fill="none"><path d="M200,14 C156,22 128,34 104,58 C88,74 78,96 74,118" stroke="#a89070" stroke-width="2" stroke-linecap="round" opacity="0.65"/><path d="M136,32 C128,46 124,58 124,70" stroke="#a89070" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/><path d="M104,58 C96,60 86,60 78,57" stroke="#a89070" stroke-width="1.3" stroke-linecap="round" opacity="0.6"/><circle cx="124.0" cy="67.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="128.8" cy="70.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="126.9" cy="76.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="121.1" cy="76.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="119.2" cy="70.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="124" cy="72" r="1.7" fill="#c9a05a"/><circle cx="77.0" cy="51.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="81.8" cy="54.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="79.9" cy="60.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="74.1" cy="60.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="72.2" cy="54.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="77" cy="56" r="1.7" fill="#c9a05a"/><circle cx="72.0" cy="115.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="76.8" cy="118.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="74.9" cy="124.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="69.1" cy="124.0" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="67.2" cy="118.5" r="3.4" fill="rgba(193,104,94,0.5)"/><circle cx="72" cy="120" r="1.7" fill="#c9a05a"/><circle cx="150" cy="26" r="2.4" fill="rgba(193,104,94,0.45)"/><circle cx="96" cy="66" r="2.2" fill="rgba(193,104,94,0.4)"/></svg>
   <div class="seal">囍</div>
   <div class="head-title">答谢宴邀请函</div>
   <div class="head-sub">谨订于二〇二六年十二月六日</div>
